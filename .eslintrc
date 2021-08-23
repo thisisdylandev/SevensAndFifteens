@@ -1,0 +1,18 @@
+{
+  "plugins": ["prettier", "react", "react-hooks", "react-native"],
+  "extends": ["prettier", "plugin:react-native/all"],
+  "rules": {
+    "prettier/prettier": ["error"],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
+  },
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+        "jsx": true
+    }
+  },
+  "env": {
+    "react-native/react-native": true
+  }
+}
