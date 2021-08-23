@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 
 type TextProps = {
   type?: 'header' | 'subheader';
-  children: string;
+  children: string[];
   style?: StyleProp<TextStyle>[];
 };
 

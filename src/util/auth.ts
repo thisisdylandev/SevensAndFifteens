@@ -1,5 +1,5 @@
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import React, { Dispatch, SetStateAction } from 'react';
-import { Alert } from 'react-native';
 
 type ErrorType = {
   email?: string;
@@ -12,7 +12,22 @@ export const useLogin = () => {
   const [errors, setErrors]: [ErrorType, Dispatch<SetStateAction<{}>>] =
     React.useState({});
 
-  const submit = () => {
+  // Set an initializing state whilst Firebase connects
+  const [initializing, setInitializing] = React.useState(true);
+  const [user, setUser] = React.useState<FirebaseAuthTypes.User | null>(null);
+
+  // Handle user state changes
+  function onAuthStateChanged(user: any) {
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }
+
+  React.useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, [onAuthStateChanged]);
+
+  const signIn = () => {
     const nextErrors: ErrorType = {};
     if (email.length === 0) {
       nextErrors.email = 'This field is required.';
@@ -26,16 +41,22 @@ export const useLogin = () => {
       return null;
     }
 
-    Alert.alert('Success!', `Email: ${email} \n Password: ${password}`);
+    auth().signInWithEmailAndPassword(email, password);
     return null;
   };
 
+  const signOut = () => {
+    auth().signOut();
+  };
+
   return {
-    submit,
+    signIn,
+    signOut,
     errors,
     email,
     setEmail,
     password,
     setPassword,
+    user,
   };
 };

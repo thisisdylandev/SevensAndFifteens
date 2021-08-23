@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   row: {
     paddingHorizontal: 15,
     paddingVertical: 10,
-    backgroundColor: colors.white,
+    backgroundColor: colors.background,
   },
   titleText: {
     fontWeight: 'bold',

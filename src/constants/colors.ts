@@ -1,8 +1,11 @@
 export default {
-  primary: '#202c41',
-  border: '#c6c6c6',
+  primary: '#5260ff',
+  secondary: '#50c8ff',
+  border: '#5260ff',
   white: '#fff',
   gray: '#9ca5ab',
-  background: '#eef0f3',
-  error: '#b55464',
+  background: 'whitesmoke',
+  error: '#ff4961',
+  success: '#2fdf75',
+  warning: '#ffd534',
 };

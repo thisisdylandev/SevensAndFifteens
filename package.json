@@ -3,14 +3,14 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "android": "npx react-native run-android",
+    "ios": "npx react-native run-ios",
     "start": "react-native start",
     "test": "jest",
     "lint": "npm run eslint && npm run prettier -- --check",
     "lint:fix": "npm run eslint -- --fix && npm run prettier -- --write",
-    "prettier": "prettier \"**/*.js\"",
-    "eslint": "eslint . --ext .js"
+    "prettier": "prettier \"**/*.ts\"",
+    "eslint": "eslint . --ext .ts"
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.11",
