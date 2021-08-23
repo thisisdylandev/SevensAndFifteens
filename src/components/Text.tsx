@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text as RNText, StyleProp, TextStyle } from 'react-native';
-
+import { StyleProp, StyleSheet, Text as RNText, TextStyle } from 'react-native';
 import colors from '../constants/colors';
 
 const styles = StyleSheet.create({
@@ -23,7 +22,7 @@ const styles = StyleSheet.create({
 
 type TextProps = {
   type?: 'header' | 'subheader';
-  children: string[];
+  children: string;
   style?: StyleProp<TextStyle>[];
 };
 

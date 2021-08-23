@@ -18,14 +18,14 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Login = () => {
+export const Register = () => {
+  const { register } = React.useContext(AuthContext);
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const { login } = React.useContext(AuthContext);
   const [errors, setErrors]: [ErrorType, Dispatch<SetStateAction<{}>>] =
     React.useState({});
 
-  const userLogin = () => {
+  const userRegister = () => {
     const nextErrors: ErrorType = {};
     if (email.length === 0) {
       nextErrors.email = 'This field is required.';
@@ -38,7 +38,7 @@ export const Login = () => {
     if (Object.keys(nextErrors).length > 0) {
       return null;
     }
-    login(email, password);
+    register(email, password);
     return null;
   };
 
@@ -62,7 +62,7 @@ export const Login = () => {
         errorText={errors.password}
         autoCapitalize="none"
       />
-      <Button onPress={userLogin}>Sign In</Button>
+      <Button onPress={userRegister}>Create Account</Button>
     </View>
   );
 };
