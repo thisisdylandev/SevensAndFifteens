@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '../components/Button';
 import colors from '../constants/colors';
 import { AuthContext } from '../util/AuthContext';
@@ -15,9 +16,9 @@ const styles = StyleSheet.create({
 export const Home = () => {
   const { user, logout } = React.useContext(AuthContext);
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <Text>Welcome user {user?.email}</Text>
       <Button onPress={() => logout()}>Logout</Button>
-    </View>
+    </SafeAreaView>
   );
 };
