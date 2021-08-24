@@ -16,6 +16,12 @@ type ProfileType = {
   team?: string;
 };
 
+type ErrorType = {
+  firstName?: string;
+  lastName?: string;
+  displayName?: string;
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -27,7 +33,13 @@ const styles = StyleSheet.create({
 export const Profile = () => {
   const { user } = React.useContext(AuthContext);
   const [loading, setLoading] = React.useState(false);
+  const [errors, setErrors]: [ErrorType, Dispatch<SetStateAction<{}>>] =
+    React.useState({});
   const [userProfile, setUserProfile]: [
+    ProfileType,
+    Dispatch<SetStateAction<{}>>
+  ] = React.useState({});
+  const [originalProfile, setOriginalProfile]: [
     ProfileType,
     Dispatch<SetStateAction<{}>>
   ] = React.useState({});
@@ -39,8 +51,9 @@ export const Profile = () => {
       .onSnapshot(doc => {
         const prof: ProfileType = doc.data() as ProfileType;
         setUserProfile(prof);
+        setOriginalProfile(prof);
       });
-
+    setErrors({});
     // Stop listening for updates when no longer required
     return () => subscriber();
   }, [user]);
@@ -52,15 +65,44 @@ export const Profile = () => {
     setUserProfile(newProfile);
   };
 
-  const updateProfile = () => {
+  const updateProfile = async () => {
+    let validDisplayName = true;
+    setErrors({});
     setLoading(true);
-    firestore()
-      .collection('profiles')
-      .doc(user?.uid)
-      .update(userProfile)
-      .then(() => {
-        setLoading(false);
+
+    // check if username is not already taken
+    await firestore()
+      .collection('displayNames')
+      .doc(`${userProfile.displayName}`)
+      .get()
+      .then(async doc => {
+        if (doc.data() !== undefined) {
+          const nextErrors: ErrorType = {};
+          nextErrors.displayName = 'That username is already taken!';
+          setErrors(nextErrors);
+          setUserProfile(originalProfile);
+          setLoading(false);
+        } else {
+          await firestore()
+            .collection('profiles')
+            .doc(user?.uid)
+            .update(userProfile);
+
+          // delete the old username, create new username
+          await firestore()
+            .collection('displayNames')
+            .doc(`${originalProfile.displayName}`)
+            .delete();
+
+          await firestore()
+            .collection('displayNames')
+            .doc(`${userProfile.displayName}`)
+            .set({ uid: user?.uid });
+
+          setLoading(false);
+        }
       });
+    setLoading(false);
   };
 
   if (loading) {
@@ -74,6 +116,7 @@ export const Profile = () => {
         label="Display Name"
         placeholder="Enter your display name..."
         value={userProfile.displayName}
+        errorText={errors.displayName}
         onChangeText={(text: string) => setProfileValues(text, 'displayName')}
         autoCapitalize="none"
       />
@@ -81,6 +124,7 @@ export const Profile = () => {
         label="First Name"
         placeholder="Enter your first name..."
         value={userProfile.firstName}
+        errorText={errors.firstName}
         onChangeText={(text: string) => setProfileValues(text, 'firstName')}
         autoCapitalize="none"
       />
@@ -88,6 +132,7 @@ export const Profile = () => {
         label="Last Name"
         placeholder="Enter your last name..."
         value={userProfile.lastName}
+        errorText={errors.lastName}
         onChangeText={(text: string) => setProfileValues(text, 'lastName')}
         autoCapitalize="none"
       />

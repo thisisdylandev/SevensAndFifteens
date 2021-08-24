@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Login = async () => {
+export const Login = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const { login } = React.useContext(AuthContext);
