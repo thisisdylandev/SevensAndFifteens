@@ -35,7 +35,7 @@ export const Text = ({ type, children, style = [] }: TextProps) => {
     textStyles.push(styles.subHeaderText);
   }
 
-  textStyles = [...textStyles, ...style];
+  textStyles = [...textStyles, { ...style }];
 
   return <RNText style={textStyles}>{children}</RNText>;
 };

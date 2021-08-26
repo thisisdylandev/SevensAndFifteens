@@ -1,22 +1,21 @@
 import React from 'react';
 import {
-  TextInput as RNTextInput,
-  StyleSheet,
-  View,
   StyleProp,
-  ViewStyle,
+  StyleSheet,
+  TextInput as RNTextInput,
   TextInputProps as RNTextInputProps,
+  View,
+  ViewStyle,
 } from 'react-native';
-
-import { Text } from './Text';
 import colors from '../constants/colors';
+import { Text } from './Text';
 
 const styles = StyleSheet.create({
   inputContainer: {
-    marginBottom: 20,
+    marginBottom: 1,
   },
   labelText: {
-    color: colors.gray,
+    color: colors.primary,
     fontSize: 18,
     marginBottom: 10,
   },
@@ -34,6 +33,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     marginTop: 5,
+    marginBottom: 2,
     color: colors.error,
   },
 });

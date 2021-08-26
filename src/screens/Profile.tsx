@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
 });
 
 export const Profile = () => {
-  const { user } = React.useContext(AuthContext);
+  const { user, logout } = React.useContext(AuthContext);
   const [loading, setLoading] = React.useState(false);
   const [errors, setErrors]: [ErrorType, Dispatch<SetStateAction<{}>>] =
     React.useState({});
@@ -137,6 +137,9 @@ export const Profile = () => {
         autoCapitalize="none"
       />
       <Button onPress={() => updateProfile()}>Update Profile</Button>
+      <Button type="error" onPress={() => logout()}>
+        Logout
+      </Button>
     </SafeAreaView>
   );
 };

@@ -1,13 +1,12 @@
 import React from 'react';
 import {
-  TouchableOpacity,
-  Text,
-  StyleSheet,
   StyleProp,
+  StyleSheet,
+  Text,
   TextStyle,
+  TouchableOpacity,
   ViewStyle,
 } from 'react-native';
-
 import colors from '../constants/colors';
 
 const styles = StyleSheet.create({
@@ -17,13 +16,12 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     borderWidth: 1,
     borderColor: colors.primary,
-    marginVertical: 7,
+    marginVertical: 5,
   },
   containerOutline: {
     backgroundColor: 'transparent',
     borderColor: colors.border,
   },
-
   text: {
     color: colors.white,
     alignSelf: 'center',
@@ -33,12 +31,16 @@ const styles = StyleSheet.create({
   textOutline: {
     color: colors.primary,
   },
+  error: {
+    backgroundColor: colors.error,
+    borderColor: colors.error,
+  },
 });
 
 type ButtonProps = {
   onPress: () => void;
   children: string;
-  type?: 'outline';
+  type?: 'outline' | 'error';
 };
 
 export const Button = ({
@@ -52,6 +54,8 @@ export const Button = ({
   if (type === 'outline') {
     containerStyles.push(styles.containerOutline);
     textStyles.push(styles.textOutline);
+  } else if (type === 'error') {
+    containerStyles.push(styles.error);
   }
 
   return (
